@@ -71,6 +71,7 @@ func TestConfigurationConversionTemplateError(t *testing.T) {
 
 func TestConfigurationConversion(t *testing.T) {
 	versions := []apis.Convertible{&v1.Configuration{}, &v1beta1.Configuration{}}
+	runtimeClassName := "runsc"
 
 	tests := []struct {
 		name     string
@@ -102,6 +103,7 @@ func TestConfigurationConversion(t *testing.T) {
 									}},
 								}},
 								DNSPolicy: corev1.DNSDefault,
+								RuntimeClassName: &runtimeClassName,
 								Volumes: []corev1.Volume{{
 									Name: "the-name",
 									VolumeSource: corev1.VolumeSource{

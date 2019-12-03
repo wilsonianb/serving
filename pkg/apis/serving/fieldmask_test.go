@@ -78,6 +78,8 @@ func TestVolumeSourceMask(t *testing.T) {
 }
 
 func TestPodSpecMask(t *testing.T) {
+	runtimeClassName := "runsc"
+
 	want := &corev1.PodSpec{
 		ServiceAccountName: "default",
 		ImagePullSecrets: []corev1.LocalObjectReference{{
@@ -87,6 +89,7 @@ func TestPodSpecMask(t *testing.T) {
 			Image: "helloworld",
 		}},
 		DNSPolicy: corev1.DNSDefault,
+		RuntimeClassName: &runtimeClassName,
 		Volumes: []corev1.Volume{{
 			Name: "the-name",
 			VolumeSource: corev1.VolumeSource{
@@ -105,6 +108,7 @@ func TestPodSpecMask(t *testing.T) {
 			Image: "helloworld",
 		}},
 		DNSPolicy: corev1.DNSDefault,
+		RuntimeClassName: &runtimeClassName,
 		Volumes: []corev1.Volume{{
 			Name: "the-name",
 			VolumeSource: corev1.VolumeSource{

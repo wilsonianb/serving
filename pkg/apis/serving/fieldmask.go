@@ -149,6 +149,7 @@ func PodSpecMask(in *corev1.PodSpec) *corev1.PodSpec {
 	out.Volumes = in.Volumes
 	out.ImagePullSecrets = in.ImagePullSecrets
 	out.DNSPolicy = in.DNSPolicy
+	out.RuntimeClassName = in.RuntimeClassName
 
 	// Disallowed fields
 	// This list is unnecessary, but added here for clarity
@@ -174,7 +175,6 @@ func PodSpecMask(in *corev1.PodSpec) *corev1.PodSpec {
 	out.Priority = nil
 	out.DNSConfig = nil
 	out.ReadinessGates = nil
-	out.RuntimeClassName = nil
 	// TODO(mattmoor): Coming in 1.13: out.EnableServiceLinks = nil
 
 	return out

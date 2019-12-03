@@ -107,7 +107,6 @@
     - Priority
     - DNSConfig
     - ReadinessGates
-    - RuntimeClassName
 - package: pkg/apis
   type: URL
   fields:

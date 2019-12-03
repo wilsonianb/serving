@@ -583,6 +583,23 @@ func TestReconcile(t *testing.T) {
 				WithLogURL, AllUnknownConditions, MarkDeploying("Deploying")),
 		}},
 		Key: "foo/dns-policy",
+	}, {
+		Name: "runtime class",
+		// This test case tests that the RuntimeClass from revision propagates to deployment
+		Objects: []runtime.Object{
+			rev("foo", "runtime-class", WithRuntimeClassName("runsc")),
+		},
+		WantCreates: []runtime.Object{
+			pa("foo", "runtime-class"),
+			deployRuntimeClassName(deploy(t, "foo", "runtime-class"), "runsc"),
+			image("foo", "runtime-class"),
+		},
+		WantStatusUpdates: []clientgotesting.UpdateActionImpl{{
+			Object: rev("foo", "runtime-class",
+				WithRuntimeClassName("runsc"),
+				WithLogURL, AllUnknownConditions, MarkDeploying("Deploying")),
+		}},
+		Key: "foo/runtime-class",
 	}}
 
 	table.Test(t, MakeFactory(func(ctx context.Context, listers *Listers, cmw configmap.Watcher) controller.Reconciler {
@@ -652,6 +669,10 @@ func deployDnsPolicy(deploy *appsv1.Deployment, policy corev1.DNSPolicy) *appsv1
 	return deploy
 }
 
+func deployRuntimeClassName(deploy *appsv1.Deployment, runtimeClass string) *appsv1.Deployment {
+	deploy.Spec.Template.Spec.RuntimeClassName = &runtimeClass
+	return deploy
+}
 
 func changeContainers(deploy *appsv1.Deployment) *appsv1.Deployment {
 	podSpec := deploy.Spec.Template.Spec

@@ -63,6 +63,7 @@ func (source *RevisionSpec) ConvertUp(ctx context.Context, sink *v1.RevisionSpec
 			Volumes:            source.Volumes,
 			ImagePullSecrets:   source.ImagePullSecrets,
 			DNSPolicy:          source.DNSPolicy,
+			RuntimeClassName:   source.RuntimeClassName,
 		}
 	case len(source.Containers) == 1:
 		sink.PodSpec = source.PodSpec

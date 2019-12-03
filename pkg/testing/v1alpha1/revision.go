@@ -112,6 +112,14 @@ func WithDnsPolicy(policy corev1.DNSPolicy) RevisionOption {
 	}
 }
 
+// WithRuntimeClassName updates the revision spec RuntimeClassName to the
+// provided RuntimeClass
+func WithRuntimeClassName(runtimeClass string) RevisionOption {
+	return func(rev *v1alpha1.Revision) {
+		rev.Spec.RuntimeClassName = &runtimeClass
+	}
+}
+
 // MarkActive calls .Status.MarkActive on the Revision.
 func MarkActive(r *v1alpha1.Revision) {
 	r.Status.MarkActiveTrue()
