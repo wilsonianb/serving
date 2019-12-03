@@ -89,7 +89,6 @@
     - RestartPolicy
     - TerminationGracePeriodSeconds
     - ActiveDeadlineSeconds
-    - DNSPolicy
     - NodeSelector
     - AutomountServiceAccountToken
     - NodeName

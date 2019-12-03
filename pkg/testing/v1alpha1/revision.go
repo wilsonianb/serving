@@ -105,6 +105,13 @@ func WithImagePullSecrets(secretName string) RevisionOption {
 	}
 }
 
+// WithDnsPolicy updates the revision spec DNSPolicy to the provided policy
+func WithDnsPolicy(policy corev1.DNSPolicy) RevisionOption {
+	return func(rev *v1alpha1.Revision) {
+		rev.Spec.DNSPolicy = policy
+	}
+}
+
 // MarkActive calls .Status.MarkActive on the Revision.
 func MarkActive(r *v1alpha1.Revision) {
 	r.Status.MarkActiveTrue()

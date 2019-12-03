@@ -148,6 +148,7 @@ func PodSpecMask(in *corev1.PodSpec) *corev1.PodSpec {
 	out.Containers = in.Containers
 	out.Volumes = in.Volumes
 	out.ImagePullSecrets = in.ImagePullSecrets
+	out.DNSPolicy = in.DNSPolicy
 
 	// Disallowed fields
 	// This list is unnecessary, but added here for clarity
@@ -155,7 +156,6 @@ func PodSpecMask(in *corev1.PodSpec) *corev1.PodSpec {
 	out.RestartPolicy = ""
 	out.TerminationGracePeriodSeconds = nil
 	out.ActiveDeadlineSeconds = nil
-	out.DNSPolicy = ""
 	out.NodeSelector = nil
 	out.AutomountServiceAccountToken = nil
 	out.NodeName = ""

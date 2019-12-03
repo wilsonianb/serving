@@ -86,6 +86,7 @@ func TestPodSpecMask(t *testing.T) {
 		Containers: []corev1.Container{{
 			Image: "helloworld",
 		}},
+		DNSPolicy: corev1.DNSDefault,
 		Volumes: []corev1.Volume{{
 			Name: "the-name",
 			VolumeSource: corev1.VolumeSource{
@@ -103,6 +104,7 @@ func TestPodSpecMask(t *testing.T) {
 		Containers: []corev1.Container{{
 			Image: "helloworld",
 		}},
+		DNSPolicy: corev1.DNSDefault,
 		Volumes: []corev1.Volume{{
 			Name: "the-name",
 			VolumeSource: corev1.VolumeSource{

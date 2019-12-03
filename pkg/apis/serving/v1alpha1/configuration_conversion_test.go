@@ -101,6 +101,7 @@ func TestConfigurationConversion(t *testing.T) {
 										ReadOnly:  true,
 									}},
 								}},
+								DNSPolicy: corev1.DNSDefault,
 								Volumes: []corev1.Volume{{
 									Name: "the-name",
 									VolumeSource: corev1.VolumeSource{

@@ -566,6 +566,23 @@ func TestReconcile(t *testing.T) {
 				WithLogURL, AllUnknownConditions, MarkDeploying("Deploying")),
 		}},
 		Key: "foo/image-pull-secrets",
+	}, {
+		Name: "dns policy",
+		// This test case tests that the DNS policy from revision propagates to deployment
+		Objects: []runtime.Object{
+			rev("foo", "dns-policy", WithDnsPolicy(corev1.DNSDefault)),
+		},
+		WantCreates: []runtime.Object{
+			pa("foo", "dns-policy"),
+			deployDnsPolicy(deploy(t, "foo", "dns-policy"), corev1.DNSDefault),
+			image("foo", "dns-policy"),
+		},
+		WantStatusUpdates: []clientgotesting.UpdateActionImpl{{
+			Object: rev("foo", "dns-policy",
+				WithDnsPolicy(corev1.DNSDefault),
+				WithLogURL, AllUnknownConditions, MarkDeploying("Deploying")),
+		}},
+		Key: "foo/dns-policy",
 	}}
 
 	table.Test(t, MakeFactory(func(ctx context.Context, listers *Listers, cmw configmap.Watcher) controller.Reconciler {
@@ -629,6 +646,12 @@ func imagePullSecrets(image *caching.Image, secretName string) *caching.Image {
 	}}
 	return image
 }
+
+func deployDnsPolicy(deploy *appsv1.Deployment, policy corev1.DNSPolicy) *appsv1.Deployment {
+	deploy.Spec.Template.Spec.DNSPolicy = policy
+	return deploy
+}
+
 
 func changeContainers(deploy *appsv1.Deployment) *appsv1.Deployment {
 	podSpec := deploy.Spec.Template.Spec
